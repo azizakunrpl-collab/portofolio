@@ -1,0 +1,1029 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Azizqt24 — Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+    <script>
+    tailwind.config = {
+        theme: {
+            extend: {
+                colors: {
+                    brand: { black:'#2C2420', red:'#C41E3A', cream:'#EBE9E1', accent:'#8C7B70', neutral:'#C4B6A6', sand:'#D4C5B0' }
+                },
+                fontFamily: { sans:['Inter','sans-serif'], serif:['Playfair Display','serif'] }
+            }
+        }
+    }
+    </script>
+    <style>
+        body{font-family:'Inter',sans-serif;background:#EBE9E1;color:#2C2420}
+        .font-serif{font-family:'Playfair Display',serif}
+        ::selection{background:#C41E3A;color:#fff}
+        .anim-scroll{opacity:0;transform:translateY(30px);transition:all .7s cubic-bezier(.16,1,.3,1)}
+        .anim-scroll.visible{opacity:1;transform:translateY(0)}
+        @keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+        .fade-up{animation:fadeUp .5s ease forwards}
+        @keyframes slideRight{from{transform:translateX(-100%)}to{transform:translateX(0)}}
+        .slide-right{animation:slideRight .35s ease forwards}
+        @keyframes toastIn{from{transform:translateX(120%);opacity:0}to{transform:translateX(0);opacity:1}}
+        @keyframes toastOut{from{transform:translateX(0);opacity:1}to{transform:translateX(120%);opacity:0}}
+        .toast-in{animation:toastIn .4s ease forwards}
+        .toast-out{animation:toastOut .3s ease forwards}
+        ::-webkit-scrollbar{width:6px}
+        ::-webkit-scrollbar-track{background:#EBE9E1}
+        ::-webkit-scrollbar-thumb{background:#C4B6A6;border-radius:3px}
+        ::-webkit-scrollbar-thumb:hover{background:#8C7B70}
+        .line-clamp-2{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+    </style>
+</head>
+<body class="min-h-screen">
+
+<!-- ===== TOAST CONTAINER ===== -->
+<div id="toast-container" class="fixed top-6 right-6 z-[9999] flex flex-col gap-3"></div>
+
+<!-- ===== MODAL OVERLAY ===== -->
+<div id="modal-overlay" class="fixed inset-0 z-[9998] hidden items-center justify-center p-4" style="background:rgba(44,36,32,.5);backdrop-filter:blur(4px)">
+    <div id="modal-content" class="bg-white rounded-2xl shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto fade-up"></div>
+</div>
+
+<!-- ============================================ -->
+<!-- ============ PORTFOLIO PAGE ================ -->
+<!-- ============================================ -->
+<div id="portfolio-page">
+
+    <!-- NAVBAR -->
+    <nav class="fixed top-0 left-0 right-0 z-50 h-20 flex items-center px-6 bg-brand-cream/80 backdrop-blur-md border-b border-brand-black/5">
+        <div class="max-w-7xl w-full mx-auto flex items-center justify-between">
+            <a href="#" class="font-serif text-2xl font-medium tracking-tight">Azizqt24</a>
+            <div class="hidden md:flex items-center gap-8">
+                <a href="#about" class="text-sm font-medium text-brand-black/70 hover:text-brand-red transition-colors">Tentang</a>
+                <a href="#portfolio" class="text-sm font-medium text-brand-black/70 hover:text-brand-red transition-colors">Portofolio</a>
+                <a href="#services" class="text-sm font-medium text-brand-black/70 hover:text-brand-red transition-colors">Layanan</a>
+                <a href="#contact" class="text-sm font-medium text-brand-black/70 hover:text-brand-red transition-colors">Kontak</a>
+                <button onclick="showLogin()" class="text-xs font-semibold tracking-widest uppercase bg-brand-black text-white px-5 py-2.5 rounded-full hover:bg-brand-red transition-colors duration-300">Admin</button>
+            </div>
+            <button id="mobile-menu-btn" class="md:hidden p-2" onclick="toggleMobileMenu()">
+                <span class="iconify text-2xl" data-icon="lucide:menu"></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- MOBILE MENU -->
+    <div id="mobile-menu" class="fixed inset-0 z-[60] hidden">
+        <div class="absolute inset-0 bg-brand-black/40" onclick="toggleMobileMenu()"></div>
+        <div class="absolute top-0 right-0 w-72 h-full bg-brand-cream shadow-2xl p-8 slide-right">
+            <button onclick="toggleMobileMenu()" class="absolute top-6 right-6"><span class="iconify text-2xl" data-icon="lucide:x"></span></button>
+            <div class="flex flex-col gap-6 mt-16">
+                <a href="#about" onclick="toggleMobileMenu()" class="text-lg font-medium">Tentang</a>
+                <a href="#portfolio" onclick="toggleMobileMenu()" class="text-lg font-medium">Portofolio</a>
+                <a href="#services" onclick="toggleMobileMenu()" class="text-lg font-medium">Layanan</a>
+                <a href="#contact" onclick="toggleMobileMenu()" class="text-lg font-medium">Kontak</a>
+                <hr class="border-brand-black/10">
+                <button onclick="toggleMobileMenu();showLogin()" class="text-sm font-semibold tracking-widest uppercase bg-brand-black text-white px-5 py-3 rounded-full hover:bg-brand-red transition-colors">Admin</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- HERO -->
+    <section class="min-h-screen flex items-center pt-20 -mt-20">
+        <div class="max-w-7xl mx-auto px-6 w-full py-20 md:py-0">
+            <div class="grid md:grid-cols-2 gap-12 md:gap-16 items-center">
+                <div class="anim-scroll">
+                    <p class="text-xs font-bold tracking-[0.2em] uppercase text-brand-red mb-6">Full-Stack Developer & Designer</p>
+                    <h1 class="font-serif text-5xl md:text-7xl lg:text-8xl font-medium leading-[1.05] tracking-tight mb-6" id="hero-name">Azizqt24</h1>
+                    <p class="text-base md:text-lg font-light leading-relaxed text-brand-black/60 max-w-md mb-10" id="hero-tagline">Membangun pengalaman digital yang elegan, fungsional, dan berdampak — dari konsep hingga deploy.</p>
+                    <div class="flex flex-wrap gap-4">
+                        <a href="#portfolio" class="inline-flex items-center gap-2 bg-brand-red text-white text-sm font-semibold tracking-wider uppercase px-8 py-4 rounded-full hover:bg-brand-black transition-colors duration-300">
+                            Lihat Karya <span class="iconify" data-icon="lucide:arrow-down-right"></span>
+                        </a>
+                        <a href="#contact" class="inline-flex items-center gap-2 border-2 border-brand-black/20 text-sm font-semibold tracking-wider uppercase px-8 py-4 rounded-full hover:border-brand-black hover:bg-brand-black hover:text-white transition-all duration-300">
+                            Hubungi Saya
+                        </a>
+                    </div>
+                </div>
+                <div class="anim-scroll flex justify-center md:justify-end" style="transition-delay:.2s">
+                    <div class="relative">
+                        <div class="w-64 h-80 md:w-80 md:h-96 rounded-3xl overflow-hidden border border-brand-black/10 shadow-2xl">
+                            <img id="hero-photo" src="https://picsum.photos/seed/azizqt24portrait/640/800" alt="Azizqt24" class="w-full h-full object-cover grayscale-[20%]">
+                        </div>
+                        <div class="absolute -bottom-4 -right-4 w-24 h-24 border-2 border-brand-red/30 rounded-2xl"></div>
+                        <div class="absolute -top-4 -left-4 w-16 h-16 bg-brand-red/10 rounded-xl"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="py-24 md:py-32 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid md:grid-cols-2 gap-16 items-start">
+                <div class="anim-scroll">
+                    <p class="text-xs font-bold tracking-[0.2em] uppercase text-brand-red mb-4">Tentang Saya</p>
+                    <h2 class="font-serif text-4xl md:text-5xl tracking-tight leading-tight mb-6">Mengenal Lebih Dekat</h2>
+                </div>
+                <div class="anim-scroll" style="transition-delay:.15s">
+                    <div class="space-y-5 text-brand-black/70 leading-relaxed" id="about-text">
+                        <p>Saya adalah seorang pengembang web dan desainer kreatif dengan passion dalam menciptakan solusi digital yang tidak hanya indah secara visual, tetapi juga fungsional dan berdampak bagi pengguna.</p>
+                        <p>Dengan pengalaman dalam berbagai teknologi modern, saya membantu bisnis dan individu mewujudkan ide mereka menjadi produk digital yang nyata. Dari desain UI/UX hingga implementasi full-stack, saya menangani setiap proyek dengan pendekatan yang detail dan berorientasi hasil.</p>
+                    </div>
+                    <div class="grid grid-cols-2 gap-6 mt-10">
+                        <div class="border-l-2 border-brand-red pl-4">
+                            <p class="font-serif text-3xl font-medium">50+</p>
+                            <p class="text-sm text-brand-black/50 mt-1">Proyek Selesai</p>
+                        </div>
+                        <div class="border-l-2 border-brand-red pl-4">
+                            <p class="font-serif text-3xl font-medium">3+</p>
+                            <p class="text-sm text-brand-black/50 mt-1">Tahun Pengalaman</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Skills -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-20 anim-scroll" style="transition-delay:.25s">
+                <div class="bg-white rounded-2xl p-6 text-center border border-brand-black/5 hover:-translate-y-1 transition-transform duration-300">
+                    <span class="iconify text-3xl text-brand-red mx-auto mb-3" data-icon="lucide:code-2"></span>
+                    <p class="font-medium text-sm">Front-End</p>
+                    <p class="text-xs text-brand-black/50 mt-1">React, Next.js, Vue</p>
+                </div>
+                <div class="bg-white rounded-2xl p-6 text-center border border-brand-black/5 hover:-translate-y-1 transition-transform duration-300">
+                    <span class="iconify text-3xl text-brand-red mx-auto mb-3" data-icon="lucide:server"></span>
+                    <p class="font-medium text-sm">Back-End</p>
+                    <p class="text-xs text-brand-black/50 mt-1">Node.js, Laravel, PHP</p>
+                </div>
+                <div class="bg-white rounded-2xl p-6 text-center border border-brand-black/5 hover:-translate-y-1 transition-transform duration-300">
+                    <span class="iconify text-3xl text-brand-red mx-auto mb-3" data-icon="lucide:palette"></span>
+                    <p class="font-medium text-sm">UI/UX Design</p>
+                    <p class="text-xs text-brand-black/50 mt-1">Figma, Adobe XD</p>
+                </div>
+                <div class="bg-white rounded-2xl p-6 text-center border border-brand-black/5 hover:-translate-y-1 transition-transform duration-300">
+                    <span class="iconify text-3xl text-brand-red mx-auto mb-3" data-icon="lucide:database"></span>
+                    <p class="font-medium text-sm">Database</p>
+                    <p class="text-xs text-brand-black/50 mt-1">PostgreSQL, MySQL, MongoDB</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PORTFOLIO -->
+    <section id="portfolio" class="py-24 md:py-32 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-14 anim-scroll">
+                <p class="text-xs font-bold tracking-[0.2em] uppercase text-brand-red mb-4">Portofolio</p>
+                <h2 class="font-serif text-4xl md:text-5xl tracking-tight">Karya Terpilih</h2>
+            </div>
+            <!-- Filter -->
+            <div class="flex flex-wrap justify-center gap-3 mb-12 anim-scroll" style="transition-delay:.1s" id="filter-buttons"></div>
+            <!-- Grid -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6" id="portfolio-grid"></div>
+        </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section id="services" class="py-24 md:py-32 px-6 bg-brand-black text-white">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-14 anim-scroll">
+                <p class="text-xs font-bold tracking-[0.2em] uppercase text-brand-red mb-4">Layanan</p>
+                <h2 class="font-serif text-4xl md:text-5xl tracking-tight">Apa yang Saya Tawarkan</h2>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6" id="services-grid"></div>
+        </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="py-24 md:py-32 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid md:grid-cols-2 gap-16">
+                <div class="anim-scroll">
+                    <p class="text-xs font-bold tracking-[0.2em] uppercase text-brand-red mb-4">Kontak</p>
+                    <h2 class="font-serif text-4xl md:text-5xl tracking-tight leading-tight mb-6">Mari Bekerja<br>Sama</h2>
+                    <p class="text-brand-black/60 leading-relaxed mb-10">Punya proyek menarik? Saya selalu terbuka untuk mendiskusikan peluang baru dan kolaborasi kreatif.</p>
+                    <div class="space-y-5" id="contact-info">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-full bg-brand-red/10 flex items-center justify-center">
+                                <span class="iconify text-brand-red text-xl" data-icon="lucide:mail"></span>
+                            </div>
+                            <div>
+                                <p class="text-xs text-brand-black/50 uppercase tracking-wider">Email</p>
+                                <p class="font-medium" id="contact-email">azizqt24@email.com</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-full bg-brand-red/10 flex items-center justify-center">
+                                <span class="iconify text-brand-red text-xl" data-icon="lucide:map-pin"></span>
+                            </div>
+                            <div>
+                                <p class="text-xs text-brand-black/50 uppercase tracking-wider">Lokasi</p>
+                                <p class="font-medium" id="contact-location">Indonesia</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Social -->
+                    <div class="flex gap-3 mt-10" id="social-links">
+                        <a href="#" class="w-11 h-11 rounded-full border border-brand-black/10 flex items-center justify-center hover:bg-brand-black hover:text-white hover:border-brand-black transition-all duration-300" id="social-github">
+                            <span class="iconify text-lg" data-icon="lucide:github"></span>
+                        </a>
+                        <a href="#" class="w-11 h-11 rounded-full border border-brand-black/10 flex items-center justify-center hover:bg-brand-black hover:text-white hover:border-brand-black transition-all duration-300" id="social-linkedin">
+                            <span class="iconify text-lg" data-icon="lucide:linkedin"></span>
+                        </a>
+                        <a href="#" class="w-11 h-11 rounded-full border border-brand-black/10 flex items-center justify-center hover:bg-brand-black hover:text-white hover:border-brand-black transition-all duration-300" id="social-twitter">
+                            <span class="iconify text-lg" data-icon="lucide:twitter"></span>
+                        </a>
+                        <a href="#" class="w-11 h-11 rounded-full border border-brand-black/10 flex items-center justify-center hover:bg-brand-black hover:text-white hover:border-brand-black transition-all duration-300" id="social-instagram">
+                            <span class="iconify text-lg" data-icon="lucide:instagram"></span>
+                        </a>
+                    </div>
+                </div>
+                <div class="anim-scroll" style="transition-delay:.15s">
+                    <form id="contact-form" class="bg-white rounded-2xl p-8 md:p-10 shadow-lg border border-brand-black/5 space-y-6">
+                        <div>
+                            <label class="block text-xs font-bold tracking-wider uppercase text-brand-black/50 mb-2">Nama</label>
+                            <input type="text" name="name" required class="w-full bg-brand-cream/50 border border-brand-black/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-brand-red/50 focus:ring-1 focus:ring-brand-red/20 transition-colors" placeholder="Nama lengkap">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold tracking-wider uppercase text-brand-black/50 mb-2">Email</label>
+                            <input type="email" name="email" required class="w-full bg-brand-cream/50 border border-brand-black/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-brand-red/50 focus:ring-1 focus:ring-brand-red/20 transition-colors" placeholder="email@contoh.com">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold tracking-wider uppercase text-brand-black/50 mb-2">Subjek</label>
+                            <input type="text" name="subject" required class="w-full bg-brand-cream/50 border border-brand-black/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-brand-red/50 focus:ring-1 focus:ring-brand-red/20 transition-colors" placeholder="Tentang apa?">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold tracking-wider uppercase text-brand-black/50 mb-2">Pesan</label>
+                            <textarea name="message" rows="5" required class="w-full bg-brand-cream/50 border border-brand-black/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-brand-red/50 focus:ring-1 focus:ring-brand-red/20 transition-colors resize-none" placeholder="Ceritakan proyek Anda..."></textarea>
+                        </div>
+                        <button type="submit" class="w-full bg-brand-red text-white text-sm font-semibold tracking-wider uppercase py-4 rounded-full hover:bg-brand-black transition-colors duration-300">
+                            Kirim Pesan
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-brand-black text-white py-12 px-6">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+            <p class="font-serif text-xl">Azizqt24</p>
+            <p class="text-sm text-white/50">&copy; 2025 Azizqt24. All rights reserved.</p>
+        </div>
+    </footer>
+</div>
+
+<!-- ============================================ -->
+<!-- ============= ADMIN LOGIN ================== -->
+<!-- ============================================ -->
+<div id="admin-login" class="hidden min-h-screen flex items-center justify-center px-6 py-20">
+    <div class="w-full max-w-md fade-up">
+        <div class="text-center mb-10">
+            <a href="#" onclick="showPortfolio();return false" class="font-serif text-3xl text-brand-black">Azizqt24</a>
+            <p class="text-sm text-brand-black/50 mt-2">Panel Kontrol Admin</p>
+        </div>
+        <form id="login-form" class="bg-white rounded-2xl p-8 shadow-lg border border-brand-black/5 space-y-5">
+            <div>
+                <label class="block text-xs font-bold tracking-wider uppercase text-brand-black/50 mb-2">Username</label>
+                <input type="text" id="login-user" required class="w-full bg-brand-cream/50 border border-brand-black/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-brand-red/50 focus:ring-1 focus:ring-brand-red/20 transition-colors" placeholder="admin">
+            </div>
+            <div>
+                <label class="block text-xs font-bold tracking-wider uppercase text-brand-black/50 mb-2">Password</label>
+                <input type="password" id="login-pass" required class="w-full bg-brand-cream/50 border border-brand-black/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-brand-red/50 focus:ring-1 focus:ring-brand-red/20 transition-colors" placeholder="••••••">
+            </div>
+            <div id="login-error" class="hidden text-sm text-brand-red bg-brand-red/5 rounded-xl p-3"></div>
+            <button type="submit" class="w-full bg-brand-black text-white text-sm font-semibold tracking-wider uppercase py-4 rounded-full hover:bg-brand-red transition-colors duration-300">Masuk</button>
+            <p class="text-center text-xs text-brand-black/40">Default: admin / admin123</p>
+        </form>
+    </div>
+</div>
+
+<!-- ============================================ -->
+<!-- ============= ADMIN PANEL ================== -->
+<!-- ============================================ -->
+<div id="admin-panel" class="hidden min-h-screen">
+    <div class="flex">
+        <!-- SIDEBAR -->
+        <aside id="admin-sidebar" class="fixed top-0 left-0 h-full w-64 bg-brand-black text-white z-50 flex flex-col transform -translate-x-full md:translate-x-0 transition-transform duration-300">
+            <div class="p-6 border-b border-white/10">
+                <a href="#" onclick="showPortfolio();return false" class="font-serif text-xl">Azizqt24</a>
+                <p class="text-xs text-white/40 mt-1">Admin Panel</p>
+            </div>
+            <nav class="flex-1 p-4 space-y-1">
+                <button onclick="adminNav('dashboard')" data-nav="dashboard" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm text-white/70 hover:text-white hover:bg-white/10 transition-all">
+                    <span class="iconify text-lg" data-icon="lucide:layout-dashboard"></span> Dashboard
+                </button>
+                <button onclick="adminNav('profile')" data-nav="profile" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm text-white/70 hover:text-white hover:bg-white/10 transition-all">
+                    <span class="iconify text-lg" data-icon="lucide:user"></span> Profil
+                </button>
+                <button onclick="adminNav('portfolio-admin')" data-nav="portfolio-admin" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm text-white/70 hover:text-white hover:bg-white/10 transition-all">
+                    <span class="iconify text-lg" data-icon="lucide:briefcase"></span> Portofolio
+                </button>
+                <button onclick="adminNav('services-admin')" data-nav="services-admin" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm text-white/70 hover:text-white hover:bg-white/10 transition-all">
+                    <span class="iconify text-lg" data-icon="lucide:settings"></span> Layanan
+                </button>
+                <button onclick="adminNav('messages')" data-nav="messages" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm text-white/70 hover:text-white hover:bg-white/10 transition-all">
+                    <span class="iconify text-lg" data-icon="lucide:mail"></span> Pesan
+                    <span id="unread-badge" class="hidden ml-auto bg-brand-red text-white text-[10px] font-bold px-2 py-0.5 rounded-full"></span>
+                </button>
+            </nav>
+            <div class="p-4 border-t border-white/10">
+                <button onclick="adminLogout()" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm text-white/70 hover:text-brand-red transition-colors">
+                    <span class="iconify text-lg" data-icon="lucide:log-out"></span> Keluar
+                </button>
+            </div>
+        </aside>
+        <!-- MAIN -->
+        <main class="flex-1 md:ml-64 min-h-screen bg-brand-cream">
+            <!-- Top bar -->
+            <header class="sticky top-0 z-40 h-16 bg-brand-cream/80 backdrop-blur-md border-b border-brand-black/5 flex items-center px-6 gap-4">
+                <button onclick="toggleSidebar()" class="md:hidden p-2 -ml-2"><span class="iconify text-xl" data-icon="lucide:menu"></span></button>
+                <h2 class="text-sm font-semibold tracking-wider uppercase" id="admin-page-title">Dashboard</h2>
+            </header>
+            <div class="p-6 md:p-8" id="admin-content"></div>
+        </main>
+    </div>
+    <!-- Sidebar overlay mobile -->
+    <div id="sidebar-overlay" class="hidden fixed inset-0 bg-black/40 z-40 md:hidden" onclick="toggleSidebar()"></div>
+</div>
+
+<!-- ============================================ -->
+<!-- ================ JAVASCRIPT ================ -->
+<!-- ============================================ -->
+<script>
+// ========== DATA LAYER (LocalStorage) ==========
+const DB = {
+    get(key, def) {
+        try { const d = localStorage.getItem('aziz_' + key); return d ? JSON.parse(d) : def; }
+        catch { return def; }
+    },
+    set(key, val) { localStorage.setItem('aziz_' + key, JSON.stringify(val)); },
+    init() {
+        if (!this.get('initialized', false)) {
+            this.set('profile', {
+                name: 'Azizqt24', tagline: 'Membangun pengalaman digital yang elegan, fungsional, dan berdampak — dari konsep hingga deploy.',
+                about: '<p>Saya adalah seorang pengembang web dan desainer kreatif dengan passion dalam menciptakan solusi digital yang tidak hanya indah secara visual, tetapi juga fungsional dan berdampak bagi pengguna.</p><p>Dengan pengalaman dalam berbagai teknologi modern, saya membantu bisnis dan individu mewujudkan ide mereka menjadi produk digital yang nyata.</p>',
+                photo: 'https://picsum.photos/seed/azizqt24portrait/640/800',
+                email: 'azizqt24@email.com', location: 'Indonesia',
+                social: { github: '#', linkedin: '#', twitter: '#', instagram: '#' }
+            });
+            this.set('projects', [
+                { id: '1', title: 'E-Commerce Platform', category: 'web', description: 'Platform belanja online modern dengan fitur keranjang, pembayaran, dan dashboard admin.', image: 'https://picsum.photos/seed/ecommerce24/600/400', link: '#' },
+                { id: '2', title: 'Banking Mobile App', category: 'mobile', description: 'Aplikasi perbankan digital dengan fitur transfer, mutasi, dan keamanan biometrik.', image: 'https://picsum.photos/seed/banking24/600/400', link: '#' },
+                { id: '3', title: 'Analytics Dashboard', category: 'web', description: 'Dashboard analitik real-time untuk memantau performa bisnis dengan visualisasi data interaktif.', image: 'https://picsum.photos/seed/dashboard24/600/400', link: '#' },
+                { id: '4', title: 'Travel App Redesign', category: 'uiux', description: 'Redesain UI/UX aplikasi travel dengan fokus pada pengalaman pengguna yang intuitif.', image: 'https://picsum.photos/seed/travel24/600/400', link: '#' },
+                { id: '5', title: 'Portfolio Website', category: 'web', description: 'Website portofolio personal dengan desain minimalis dan animasi halus.', image: 'https://picsum.photos/seed/portfolioweb24/600/400', link: '#' },
+                { id: '6', title: 'Food Delivery App', category: 'mobile', description: 'Aplikasi pesan antar makanan dengan tracking real-time dan sistem rating.', image: 'https://picsum.photos/seed/food24/600/400', link: '#' }
+            ]);
+            this.set('services', [
+                { id: '1', title: 'Web Development', description: 'Membangun website dan web app modern, responsif, dan cepat menggunakan teknologi terkini.', icon: 'lucide:code-2', price: 'Mulai Rp 5 Juta' },
+                { id: '2', title: 'Mobile Development', description: 'Mengembangkan aplikasi mobile native atau cross-platform untuk iOS dan Android.', icon: 'lucide:smartphone', price: 'Mulai Rp 8 Juta' },
+                { id: '3', title: 'UI/UX Design', description: 'Merancang antarmuka pengguna yang intuitif dan pengalaman pengguna yang menyenangkan.', icon: 'lucide:figma', price: 'Mulai Rp 3 Juta' },
+                { id: '4', title: 'Konsultasi IT', description: 'Konsultasi strategi teknologi, arsitektur sistem, dan solusi digital untuk bisnis Anda.', icon: 'lucide:lightbulb', price: 'Mulai Rp 500 Ribu/Jam' }
+            ]);
+            this.set('messages', []);
+            this.set('auth', { username: 'admin', password: 'admin123' });
+            this.set('initialized', true);
+        }
+    }
+};
+
+// ========== AUTH ==========
+const Auth = {
+    login(user, pass) {
+        const a = DB.get('auth', {});
+        if (user === a.username && pass === a.password) {
+            sessionStorage.setItem('aziz_logged', 'true');
+            return true;
+        }
+        return false;
+    },
+    logout() { sessionStorage.removeItem('aziz_logged'); },
+    check() { return sessionStorage.getItem('aziz_logged') === 'true'; }
+};
+
+// ========== TOAST ==========
+function toast(msg, type = 'success') {
+    const c = document.getElementById('toast-container');
+    const colors = { success: 'bg-green-600', error: 'bg-brand-red', info: 'bg-brand-black' };
+    const icons = { success: 'lucide:check-circle', error: 'lucide:alert-circle', info: 'lucide:info' };
+    const el = document.createElement('div');
+    el.className = `toast-in flex items-center gap-3 ${colors[type]} text-white px-5 py-3.5 rounded-xl shadow-lg text-sm font-medium min-w-[280px]`;
+    el.innerHTML = `<span class="iconify text-lg shrink-0" data-icon="${icons[type]}"></span><span>${msg}</span>`;
+    c.appendChild(el);
+    setTimeout(() => { el.classList.replace('toast-in','toast-out'); setTimeout(() => el.remove(), 300); }, 3000);
+}
+
+// ========== MODAL ==========
+function showModal(html) {
+    document.getElementById('modal-content').innerHTML = html;
+    document.getElementById('modal-overlay').classList.remove('hidden');
+    document.getElementById('modal-overlay').classList.add('flex');
+}
+function hideModal() {
+    document.getElementById('modal-overlay').classList.add('hidden');
+    document.getElementById('modal-overlay').classList.remove('flex');
+}
+document.getElementById('modal-overlay').addEventListener('click', e => { if (e.target === e.currentTarget) hideModal(); });
+
+// ========== UUID ==========
+function uid() { return Date.now().toString(36) + Math.random().toString(36).substr(2, 5); }
+
+// ========== PAGE ROUTING ==========
+function showPortfolio() {
+    document.getElementById('portfolio-page').classList.remove('hidden');
+    document.getElementById('admin-login').classList.add('hidden');
+    document.getElementById('admin-panel').classList.add('hidden');
+    renderPortfolio();
+    renderServices();
+    applyProfile();
+    updateUnreadBadge();
+    initScrollAnim();
+}
+function showLogin() {
+    document.getElementById('portfolio-page').classList.add('hidden');
+    document.getElementById('admin-login').classList.remove('hidden');
+    document.getElementById('admin-panel').classList.add('hidden');
+}
+function showAdmin() {
+    document.getElementById('portfolio-page').classList.add('hidden');
+    document.getElementById('admin-login').classList.add('hidden');
+    document.getElementById('admin-panel').classList.remove('hidden');
+    adminNav('dashboard');
+}
+
+// ========== MOBILE MENU ==========
+function toggleMobileMenu() {
+    const m = document.getElementById('mobile-menu');
+    m.classList.toggle('hidden');
+}
+function toggleSidebar() {
+    const s = document.getElementById('admin-sidebar');
+    const o = document.getElementById('sidebar-overlay');
+    s.classList.toggle('-translate-x-full');
+    o.classList.toggle('hidden');
+}
+
+// ========== SCROLL ANIMATIONS ==========
+function initScrollAnim() {
+    const obs = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.anim-scroll:not(.visible)').forEach(el => obs.observe(el));
+}
+
+// ========== APPLY PROFILE TO FRONTEND ==========
+function applyProfile() {
+    const p = DB.get('profile', {});
+    document.getElementById('hero-name').textContent = p.name || 'Azizqt24';
+    document.getElementById('hero-tagline').textContent = p.tagline || '';
+    document.getElementById('hero-photo').src = p.photo || 'https://picsum.photos/seed/azizqt24portrait/640/800';
+    document.getElementById('about-text').innerHTML = p.about || '';
+    document.getElementById('contact-email').textContent = p.email || '';
+    document.getElementById('contact-location').textContent = p.location || '';
+    if (p.social) {
+        document.getElementById('social-github').href = p.social.github || '#';
+        document.getElementById('social-linkedin').href = p.social.linkedin || '#';
+        document.getElementById('social-twitter').href = p.social.twitter || '#';
+        document.getElementById('social-instagram').href = p.social.instagram || '#';
+    }
+}
+
+// ========== RENDER PORTFOLIO ==========
+let currentFilter = 'all';
+function renderPortfolio() {
+    const projects = DB.get('projects', []);
+    const categories = ['all', ...new Set(projects.map(p => p.category))];
+    const labels = { all: 'Semua', web: 'Web', mobile: 'Mobile', uiux: 'UI/UX', other: 'Lainnya' };
+
+    // Filter buttons
+    document.getElementById('filter-buttons').innerHTML = categories.map(c =>
+        `<button onclick="filterPortfolio('${c}')" class="px-5 py-2 rounded-full text-xs font-semibold tracking-wider uppercase border transition-all duration-300 ${currentFilter === c ? 'bg-brand-black text-white border-brand-black' : 'border-brand-black/15 text-brand-black/60 hover:border-brand-black hover:text-brand-black'}">${labels[c] || c}</button>`
+    ).join('');
+
+    // Grid
+    const filtered = currentFilter === 'all' ? projects : projects.filter(p => p.category === currentFilter);
+    document.getElementById('portfolio-grid').innerHTML = filtered.length ? filtered.map(p =>
+        `<div class="group bg-white rounded-2xl overflow-hidden border border-brand-black/5 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 anim-scroll visible">
+            <div class="relative overflow-hidden aspect-[3/2]">
+                <img src="${p.image}" alt="${p.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                <div class="absolute inset-0 bg-gradient-to-t from-brand-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
+                    <a href="${p.link}" target="_blank" class="text-white text-sm font-medium flex items-center gap-2"><span class="iconify" data-icon="lucide:external-link"></span> Lihat Detail</a>
+                </div>
+                <span class="absolute top-4 left-4 bg-white/90 backdrop-blur-sm text-[10px] font-bold tracking-widest uppercase px-3 py-1 rounded-full">${labels[p.category] || p.category}</span>
+            </div>
+            <div class="p-6">
+                <h3 class="font-serif text-xl font-medium mb-2">${p.title}</h3>
+                <p class="text-sm text-brand-black/50 line-clamp-2">${p.description}</p>
+            </div>
+        </div>`
+    ).join('') : '<p class="col-span-full text-center text-brand-black/40 py-20">Belum ada proyek di kategori ini.</p>';
+}
+function filterPortfolio(cat) { currentFilter = cat; renderPortfolio(); }
+
+// ========== RENDER SERVICES ==========
+function renderServices() {
+    const services = DB.get('services', []);
+    document.getElementById('services-grid').innerHTML = services.map(s =>
+        `<div class="bg-white/5 border border-white/10 rounded-2xl p-8 hover:bg-white/10 transition-all duration-300 hover:-translate-y-1 anim-scroll">
+            <span class="iconify text-3xl text-brand-red mb-5 block" data-icon="${s.icon || 'lucide:star'}"></span>
+            <h3 class="font-serif text-xl font-medium mb-3">${s.title}</h3>
+            <p class="text-sm text-white/50 leading-relaxed mb-5">${s.description}</p>
+            <p class="text-xs font-bold text-brand-red tracking-wider uppercase">${s.price || ''}</p>
+        </div>`
+    ).join('');
+    initScrollAnim();
+}
+
+// ========== CONTACT FORM ==========
+document.getElementById('contact-form').addEventListener('submit', e => {
+    e.preventDefault();
+    const fd = new FormData(e.target);
+    const msg = { id: uid(), name: fd.get('name'), email: fd.get('email'), subject: fd.get('subject'), message: fd.get('message'), read: false, createdAt: new Date().toISOString() };
+    const msgs = DB.get('messages', []);
+    msgs.unshift(msg);
+    DB.set('messages', msgs);
+    e.target.reset();
+    toast('Pesan berhasil dikirim! Saya akan segera merespons.');
+    updateUnreadBadge();
+});
+function updateUnreadBadge() {
+    const msgs = DB.get('messages', []);
+    const unread = msgs.filter(m => !m.read).length;
+    const badge = document.getElementById('unread-badge');
+    if (unread > 0) { badge.classList.remove('hidden'); badge.textContent = unread; }
+    else { badge.classList.add('hidden'); }
+}
+
+// ========== LOGIN FORM ==========
+document.getElementById('login-form').addEventListener('submit', e => {
+    e.preventDefault();
+    const u = document.getElementById('login-user').value;
+    const p = document.getElementById('login-pass').value;
+    if (Auth.login(u, p)) { showAdmin(); toast('Selamat datang, Admin!'); }
+    else { const err = document.getElementById('login-error'); err.classList.remove('hidden'); err.textContent = 'Username atau password salah.'; }
+});
+
+// ========== ADMIN NAVIGATION ==========
+function adminNav(view) {
+    document.querySelectorAll('.nav-btn').forEach(b => { b.classList.remove('bg-white/10','text-white'); b.classList.add('text-white/70'); });
+    const active = document.querySelector(`[data-nav="${view}"]`);
+    if (active) { active.classList.add('bg-white/10','text-white'); active.classList.remove('text-white/70'); }
+    const titles = { dashboard:'Dashboard', profile:'Profil', 'portfolio-admin':'Kelola Portofolio', 'services-admin':'Kelola Layanan', messages:'Pesan Masuk' };
+    document.getElementById('admin-page-title').textContent = titles[view] || 'Dashboard';
+    const renderers = { dashboard: renderDashboard, profile: renderProfile, 'portfolio-admin': renderPortfolioAdmin, 'services-admin': renderServicesAdmin, messages: renderMessages };
+    (renderers[view] || renderDashboard)();
+    // Close mobile sidebar
+    document.getElementById('admin-sidebar').classList.add('-translate-x-full');
+    document.getElementById('sidebar-overlay').classList.add('hidden');
+    setTimeout(() => { document.getElementById('admin-sidebar').classList.remove('-translate-x-full'); }, 10);
+}
+
+// ========== DASHBOARD VIEW ==========
+function renderDashboard() {
+    const projects = DB.get('projects', []);
+    const services = DB.get('services', []);
+    const messages = DB.get('messages', []);
+    const unread = messages.filter(m => !m.read).length;
+    document.getElementById('admin-content').innerHTML = `
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+            ${statCard('lucide:briefcase','Total Proyek', projects.length, 'brand-black')}
+            ${statCard('lucide:settings','Layanan', services.length, 'brand-red')}
+            ${statCard('lucide:mail','Pesan Masuk', messages.length, 'brand-accent')}
+            ${statCard('lucide:bell','Belum Dibaca', unread, 'brand-red')}
+        </div>
+        <div class="grid lg:grid-cols-2 gap-6">
+            <div class="bg-white rounded-2xl p-6 border border-brand-black/5">
+                <h3 class="font-medium text-sm mb-4 flex items-center gap-2"><span class="iconify text-brand-red" data-icon="lucide:mail"></span> Pesan Terbaru</h3>
+                ${messages.length ? messages.slice(0,5).map(m => `
+                    <div class="flex items-start gap-3 py-3 border-b border-brand-black/5 last:border-0">
+                        <div class="w-9 h-9 rounded-full ${m.read ? 'bg-brand-neutral/30' : 'bg-brand-red/10'} flex items-center justify-center shrink-0 mt-0.5">
+                            <span class="iconify text-sm ${m.read ? 'text-brand-accent' : 'text-brand-red'}" data-icon="lucide:mail"></span>
+                        </div>
+                        <div class="min-w-0">
+                            <p class="text-sm font-medium truncate">${m.name}</p>
+                            <p class="text-xs text-brand-black/40 truncate">${m.subject}</p>
+                        </div>
+                    </div>
+                `).join('') : '<p class="text-sm text-brand-black/40 py-4">Belum ada pesan.</p>'}
+            </div>
+            <div class="bg-white rounded-2xl p-6 border border-brand-black/5">
+                <h3 class="font-medium text-sm mb-4 flex items-center gap-2"><span class="iconify text-brand-red" data-icon="lucide:briefcase"></span> Proyek Terbaru</h3>
+                ${projects.slice(0,5).map(p => `
+                    <div class="flex items-center gap-3 py-3 border-b border-brand-black/5 last:border-0">
+                        <img src="${p.image}" class="w-10 h-10 rounded-lg object-cover shrink-0">
+                        <div class="min-w-0">
+                            <p class="text-sm font-medium truncate">${p.title}</p>
+                            <p class="text-xs text-brand-black/40 uppercase tracking-wider">${p.category}</p>
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
+        </div>`;
+}
+function statCard(icon, label, value, color) {
+    return `<div class="bg-white rounded-2xl p-6 border border-brand-black/5">
+        <span class="iconify text-2xl text-${color} mb-3 block" data-icon="${icon}"></span>
+        <p class="font-serif text-3xl font-medium">${value}</p>
+        <p class="text-xs text-brand-black/40 mt-1 uppercase tracking-wider">${label}</p>
+    </div>`;
+}
+
+// ========== PROFILE VIEW ==========
+function renderProfile() {
+    const p = DB.get('profile', {});
+    document.getElementById('admin-content').innerHTML = `
+        <div class="bg-white rounded-2xl p-8 border border-brand-black/5 max-w-2xl">
+            <h3 class="font-medium mb-6 flex items-center gap-2"><span class="iconify text-brand-red" data-icon="lucide:user"></span> Edit Profil</h3>
+            <form id="profile-form" class="space-y-5">
+                <div>
+                    <label class="block text-xs font-bold tracking-wider uppercase text-brand-black/50 mb-2">Nama</label>
+                    <input type="text" name="name" value="${p.name||''}" class="w-full bg-brand-cream/50 border border-brand-black/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-brand-red/50 transition-colors">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold tracking-wider uppercase text-brand-black/50 mb-2">Tagline</label>
+                    <input type="text" name="tagline" value="${p.tagline||''}" class="w-full bg-brand-cream/50 border border-brand-black/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-brand-red/50 transition-colors">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold tracking-wider uppercase text-brand-black/50 mb-2">Tentang Saya (HTML)</label>
+                    <textarea name="about" rows="5" class="w-full bg-brand-cream/50 border border-brand-black/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-brand-red/50 transition-colors resize-none">${p.about||''}</textarea>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold tracking-wider uppercase text-brand-black/50 mb-2">URL Foto Profil</label>
+                    <input type="url" name="photo" value="${p.photo||''}" class="w-full bg-brand-cream/50 border border-brand-black/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-brand-red/50 transition-colors">
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold tracking-wider uppercase text-brand-black/50 mb-2">Email</label>
+                        <input type="email" name="email" value="${p.email||''}" class="w-full bg-brand-cream/50 border border-brand-black/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-brand-red/50 transition-colors">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold tracking-wider uppercase text-brand-black/50 mb-2">Lokasi</label>
+                        <input type="text" name="location" value="${p.location||''}" class="w-full bg-brand-cream/50 border border-brand-black/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-brand-red/50 transition-colors">
+                    </div>
+                </div>
+                <hr class="border-brand-black/5">
+                <h4 class="text-sm font-medium">Media Sosial</h4>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="flex items-center gap-2"><span class="iconify text-lg" data-icon="lucide:github"></span><input type="text" name="github" value="${p.social?.github||''}" placeholder="GitHub URL" class="w-full bg-brand-cream/50 border border-brand-black/10 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-brand-red/50 transition-colors"></div>
+                    <div class="flex items-center gap-2"><span class="iconify text-lg" data-icon="lucide:linkedin"></span><input type="text" name="linkedin" value="${p.social?.linkedin||''}" placeholder="LinkedIn URL" class="w-full bg-brand-cream/50 border border-brand-black/10 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-brand-red/50 transition-colors"></div>
+                    <div class="flex items-center gap-2"><span class="iconify text-lg" data-icon="lucide:twitter"></span><input type="text" name="twitter" value="${p.social?.twitter||''}" placeholder="Twitter URL" class="w-full bg-brand-cream/50 border border-brand-black/10 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-brand-red/50 transition-colors"></div>
+                    <div class="flex items-center gap-2"><span class="iconify text-lg" data-icon="lucide:instagram"></span><input type="text" name="instagram" value="${p.social?.instagram||''}" placeholder="Instagram URL" class="w-full bg-brand-cream/50 border border-brand-black/10 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-brand-red/50 transition-colors"></div>
+                </div>
+                <button type="submit" class="bg-brand-black text-white text-sm font-semibold tracking-wider uppercase px-8 py-3.5 rounded-full hover:bg-brand-red transition-colors duration-300">Simpan Profil</button>
+            </form>
+        </div>`;
+    document.getElementById('profile-form').addEventListener('submit', e => {
+        e.preventDefault();
+        const fd = new FormData(e.target);
+        const profile = {
+            name: fd.get('name'), tagline: fd.get('tagline'), about: fd.get('about'), photo: fd.get('photo'),
+            email: fd.get('email'), location: fd.get('location'),
+            social: { github: fd.get('github'), linkedin: fd.get('linkedin'), twitter: fd.get('twitter'), instagram: fd.get('instagram') }
+        };
+        DB.set('profile', profile);
+        toast('Profil berhasil diperbarui!');
+    });
+}
+
+// ========== PORTFOLIO ADMIN ==========
+function renderPortfolioAdmin() {
+    const projects = DB.get('projects', []);
+    const labels = { web:'Web', mobile:'Mobile', uiux:'UI/UX', other:'Lainnya' };
+    document.getElementById('admin-content').innerHTML = `
+        <div class="flex items-center justify-between mb-6">
+            <p class="text-sm text-brand-black/50">${projects.length} proyek</p>
+            <button onclick="showProjectForm()" class="bg-brand-red text-white text-xs font-semibold tracking-wider uppercase px-6 py-3 rounded-full hover:bg-brand-black transition-colors duration-300 flex items-center gap-2">
+                <span class="iconify" data-icon="lucide:plus"></span> Tambah Proyek
+            </button>
+        </div>
+        <div class="space-y-3">
+            ${projects.map(p => `
+                <div class="bg-white rounded-xl p-4 border border-brand-black/5 flex items-center gap-4 hover:shadow-md transition-shadow">
+                    <img src="${p.image}" class="w-16 h-12 rounded-lg object-cover shrink-0">
+                    <div class="flex-1 min-w-0">
+                        <p class="font-medium text-sm truncate">${p.title}</p>
+                        <p class="text-xs text-brand-black/40 uppercase tracking-wider">${labels[p.category] || p.category}</p>
+                    </div>
+                    <div class="flex items-center gap-2 shrink-0">
+                        <button onclick="showProjectForm('${p.id}')" class="p-2 rounded-lg hover:bg-brand-cream transition-colors text-brand-black/50 hover:text-brand-black"><span class="iconify" data-icon="lucide:pencil"></span></button>
+                        <button onclick="deleteProject('${p.id}')" class="p-2 rounded-lg hover:bg-brand-red/5 transition-colors text-brand-black/50 hover:text-brand-red"><span class="iconify" data-icon="lucide:trash-2"></span></button>
+                    </div>
+                </div>
+            `).join('')}
+            ${!projects.length ? '<p class="text-center text-brand-black/40 py-16">Belum ada proyek. Klik "Tambah Proyek" untuk memulai.</p>' : ''}
+        </div>`;
+}
+
+function showProjectForm(editId) {
+    const projects = DB.get('projects', []);
+    const p = editId ? projects.find(x => x.id === editId) : null;
+    const title = p ? 'Edit Proyek' : 'Tambah Proyek Baru';
+    showModal(`
+        <div class="p-8">
+            <h3 class="font-serif text-xl font-medium mb-6">${title}</h3>
+            <form id="project-form" class="space-y-5">
+                <div>
+                    <label class="block text-xs font-bold tracking-wider uppercase text-brand-black/50 mb-2">Judul</label>
+                    <input type="text" name="title" value="${p?.title||''}" required class="w-full bg-brand-cream/50 border border-brand-black/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-brand-red/50 transition-colors">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold tracking-wider uppercase text-brand-black/50 mb-2">Kategori</label>
+                    <select name="category" class="w-full bg-brand-cream/50 border border-brand-black/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-brand-red/50 transition-colors">
+                        <option value="web" ${p?.category==='web'?'selected':''}>Web</option>
+                        <option value="mobile" ${p?.category==='mobile'?'selected':''}>Mobile</option>
+                        <option value="uiux" ${p?.category==='uiux'?'selected':''}>UI/UX</option>
+                        <option value="other" ${p?.category==='other'?'selected':''}>Lainnya</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold tracking-wider uppercase text-brand-black/50 mb-2">Deskripsi</label>
+                    <textarea name="description" rows="3" required class="w-full bg-brand-cream/50 border border-brand-black/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-brand-red/50 transition-colors resize-none">${p?.description||''}</textarea>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold tracking-wider uppercase text-brand-black/50 mb-2">URL Gambar</label>
+                    <input type="url" name="image" value="${p?.image||''}" required class="w-full bg-brand-cream/50 border border-brand-black/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-brand-red/50 transition-colors">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold tracking-wider uppercase text-brand-black/50 mb-2">Link Proyek</label>
+                    <input type="text" name="link" value="${p?.link||'#'}" class="w-full bg-brand-cream/50 border border-brand-black/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-brand-red/50 transition-colors" placeholder="https://...">
+                </div>
+                <div class="flex gap-3 pt-2">
+                    <button type="button" onclick="hideModal()" class="flex-1 border-2 border-brand-black/10 text-sm font-semibold tracking-wider uppercase py-3.5 rounded-full hover:border-brand-black/30 transition-colors">Batal</button>
+                    <button type="submit" class="flex-1 bg-brand-black text-white text-sm font-semibold tracking-wider uppercase py-3.5 rounded-full hover:bg-brand-red transition-colors duration-300">Simpan</button>
+                </div>
+            </form>
+        </div>
+    `);
+    document.getElementById('project-form').addEventListener('submit', e => {
+        e.preventDefault();
+        const fd = new FormData(e.target);
+        const data = { title: fd.get('title'), category: fd.get('category'), description: fd.get('description'), image: fd.get('image'), link: fd.get('link') || '#' };
+        const projects = DB.get('projects', []);
+        if (editId) {
+            const idx = projects.findIndex(x => x.id === editId);
+            if (idx !== -1) { projects[idx] = { ...projects[idx], ...data }; }
+        } else {
+            data.id = uid();
+            projects.unshift(data);
+        }
+        DB.set('projects', projects);
+        hideModal();
+        renderPortfolioAdmin();
+        toast(editId ? 'Proyek berhasil diperbarui!' : 'Proyek berhasil ditambahkan!');
+    });
+}
+
+function deleteProject(id) {
+    showModal(`
+        <div class="p-8 text-center">
+            <div class="w-14 h-14 rounded-full bg-brand-red/10 flex items-center justify-center mx-auto mb-4">
+                <span class="iconify text-2xl text-brand-red" data-icon="lucide:trash-2"></span>
+            </div>
+            <h3 class="font-serif text-xl font-medium mb-2">Hapus Proyek?</h3>
+            <p class="text-sm text-brand-black/50 mb-6">Tindakan ini tidak dapat dibatalkan.</p>
+            <div class="flex gap-3">
+                <button onclick="hideModal()" class="flex-1 border-2 border-brand-black/10 text-sm font-semibold tracking-wider uppercase py-3.5 rounded-full hover:border-brand-black/30 transition-colors">Batal</button>
+                <button onclick="confirmDeleteProject('${id}')" class="flex-1 bg-brand-red text-white text-sm font-semibold tracking-wider uppercase py-3.5 rounded-full hover:bg-brand-black transition-colors duration-300">Hapus</button>
+            </div>
+        </div>
+    `);
+}
+function confirmDeleteProject(id) {
+    let projects = DB.get('projects', []);
+    projects = projects.filter(p => p.id !== id);
+    DB.set('projects', projects);
+    hideModal();
+    renderPortfolioAdmin();
+    toast('Proyek berhasil dihapus.', 'info');
+}
+
+// ========== SERVICES ADMIN ==========
+function renderServicesAdmin() {
+    const services = DB.get('services', []);
+    document.getElementById('admin-content').innerHTML = `
+        <div class="flex items-center justify-between mb-6">
+            <p class="text-sm text-brand-black/50">${services.length} layanan</p>
+            <button onclick="showServiceForm()" class="bg-brand-red text-white text-xs font-semibold tracking-wider uppercase px-6 py-3 rounded-full hover:bg-brand-black transition-colors duration-300 flex items-center gap-2">
+                <span class="iconify" data-icon="lucide:plus"></span> Tambah Layanan
+            </button>
+        </div>
+        <div class="grid md:grid-cols-2 gap-4">
+            ${services.map(s => `
+                <div class="bg-white rounded-xl p-5 border border-brand-black/5 hover:shadow-md transition-shadow">
+                    <div class="flex items-start justify-between gap-4">
+                        <div class="flex items-start gap-3 min-w-0">
+                            <span class="iconify text-xl text-brand-red mt-0.5 shrink-0" data-icon="${s.icon||'lucide:star'}"></span>
+                            <div class="min-w-0">
+                                <p class="font-medium text-sm">${s.title}</p>
+                                <p class="text-xs text-brand-black/40 mt-1 line-clamp-2">${s.description}</p>
+                                <p class="text-xs font-bold text-brand-red mt-2">${s.price||''}</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-1 shrink-0">
+                            <button onclick="showServiceForm('${s.id}')" class="p-1.5 rounded-lg hover:bg-brand-cream transition-colors text-brand-black/50 hover:text-brand-black"><span class="iconify text-sm" data-icon="lucide:pencil"></span></button>
+                            <button onclick="deleteService('${s.id}')" class="p-1.5 rounded-lg hover:bg-brand-red/5 transition-colors text-brand-black/50 hover:text-brand-red"><span class="iconify text-sm" data-icon="lucide:trash-2"></span></button>
+                        </div>
+                    </div>
+                </div>
+            `).join('')}
+            ${!services.length ? '<p class="col-span-2 text-center text-brand-black/40 py-16">Belum ada layanan.</p>' : ''}
+        </div>`;
+}
+
+function showServiceForm(editId) {
+    const services = DB.get('services', []);
+    const s = editId ? services.find(x => x.id === editId) : null;
+    const title = s ? 'Edit Layanan' : 'Tambah Layanan Baru';
+    const iconOptions = ['lucide:code-2','lucide:smartphone','lucide:figma','lucide:lightbulb','lucide:palette','lucide:server','lucide:database','lucide:shield','lucide:globe','lucide:zap'];
+    showModal(`
+        <div class="p-8">
+            <h3 class="font-serif text-xl font-medium mb-6">${title}</h3>
+            <form id="service-form" class="space-y-5">
+                <div>
+                    <label class="block text-xs font-bold tracking-wider uppercase text-brand-black/50 mb-2">Judul</label>
+                    <input type="text" name="title" value="${s?.title||''}" required class="w-full bg-brand-cream/50 border border-brand-black/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-brand-red/50 transition-colors">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold tracking-wider uppercase text-brand-black/50 mb-2">Ikon</label>
+                    <div class="flex flex-wrap gap-2">
+                        ${iconOptions.map(ic => `<button type="button" onclick="document.querySelectorAll('.icon-pick').forEach(b=>b.classList.remove('ring-2','ring-brand-red'));this.classList.add('ring-2','ring-brand-red');document.getElementById('picked-icon').value='${ic}'" class="icon-pick w-10 h-10 rounded-lg border border-brand-black/10 flex items-center justify-center hover:bg-brand-cream transition-colors ${s?.icon===ic?'ring-2 ring-brand-red':''}"><span class="iconify text-lg" data-icon="${ic}"></span></button>`).join('')}
+                    </div>
+                    <input type="hidden" id="picked-icon" name="icon" value="${s?.icon||'lucide:star'}">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold tracking-wider uppercase text-brand-black/50 mb-2">Deskripsi</label>
+                    <textarea name="description" rows="3" required class="w-full bg-brand-cream/50 border border-brand-black/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-brand-red/50 transition-colors resize-none">${s?.description||''}</textarea>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold tracking-wider uppercase text-brand-black/50 mb-2">Harga</label>
+                    <input type="text" name="price" value="${s?.price||''}" class="w-full bg-brand-cream/50 border border-brand-black/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-brand-red/50 transition-colors" placeholder="Mulai Rp 5 Juta">
+                </div>
+                <div class="flex gap-3 pt-2">
+                    <button type="button" onclick="hideModal()" class="flex-1 border-2 border-brand-black/10 text-sm font-semibold tracking-wider uppercase py-3.5 rounded-full hover:border-brand-black/30 transition-colors">Batal</button>
+                    <button type="submit" class="flex-1 bg-brand-black text-white text-sm font-semibold tracking-wider uppercase py-3.5 rounded-full hover:bg-brand-red transition-colors duration-300">Simpan</button>
+                </div>
+            </form>
+        </div>
+    `);
+    document.getElementById('service-form').addEventListener('submit', e => {
+        e.preventDefault();
+        const fd = new FormData(e.target);
+        const data = { title: fd.get('title'), icon: fd.get('icon'), description: fd.get('description'), price: fd.get('price') };
+        const services = DB.get('services', []);
+        if (editId) {
+            const idx = services.findIndex(x => x.id === editId);
+            if (idx !== -1) { services[idx] = { ...services[idx], ...data }; }
+        } else {
+            data.id = uid();
+            services.push(data);
+        }
+        DB.set('services', services);
+        hideModal();
+        renderServicesAdmin();
+        toast(editId ? 'Layanan berhasil diperbarui!' : 'Layanan berhasil ditambahkan!');
+    });
+}
+
+function deleteService(id) {
+    showModal(`
+        <div class="p-8 text-center">
+            <div class="w-14 h-14 rounded-full bg-brand-red/10 flex items-center justify-center mx-auto mb-4">
+                <span class="iconify text-2xl text-brand-red" data-icon="lucide:trash-2"></span>
+            </div>
+            <h3 class="font-serif text-xl font-medium mb-2">Hapus Layanan?</h3>
+            <p class="text-sm text-brand-black/50 mb-6">Tindakan ini tidak dapat dibatalkan.</p>
+            <div class="flex gap-3">
+                <button onclick="hideModal()" class="flex-1 border-2 border-brand-black/10 text-sm font-semibold tracking-wider uppercase py-3.5 rounded-full hover:border-brand-black/30 transition-colors">Batal</button>
+                <button onclick="confirmDeleteService('${id}')" class="flex-1 bg-brand-red text-white text-sm font-semibold tracking-wider uppercase py-3.5 rounded-full hover:bg-brand-black transition-colors duration-300">Hapus</button>
+            </div>
+        </div>
+    `);
+}
+function confirmDeleteService(id) {
+    let services = DB.get('services', []);
+    services = services.filter(s => s.id !== id);
+    DB.set('services', services);
+    hideModal();
+    renderServicesAdmin();
+    toast('Layanan berhasil dihapus.', 'info');
+}
+
+// ========== MESSAGES VIEW ==========
+function renderMessages() {
+    const messages = DB.get('messages', []);
+    document.getElementById('admin-content').innerHTML = `
+        <div class="flex items-center justify-between mb-6">
+            <p class="text-sm text-brand-black/50">${messages.length} pesan</p>
+            ${messages.length ? `<button onclick="markAllRead()" class="text-xs font-semibold tracking-wider uppercase text-brand-red hover:text-brand-black transition-colors">Tandai Semua Dibaca</button>` : ''}
+        </div>
+        <div class="space-y-3">
+            ${messages.map(m => `
+                <div class="bg-white rounded-xl p-5 border border-brand-black/5 ${!m.read ? 'border-l-4 border-l-brand-red' : ''} hover:shadow-md transition-shadow cursor-pointer" onclick="showMessage('${m.id}')">
+                    <div class="flex items-start justify-between gap-4">
+                        <div class="flex items-start gap-3 min-w-0">
+                            <div class="w-10 h-10 rounded-full ${m.read ? 'bg-brand-neutral/20' : 'bg-brand-red/10'} flex items-center justify-center shrink-0 mt-0.5">
+                                <span class="iconify ${m.read ? 'text-brand-accent' : 'text-brand-red'}" data-icon="lucide:mail"></span>
+                            </div>
+                            <div class="min-w-0">
+                                <div class="flex items-center gap-2">
+                                    <p class="text-sm font-medium truncate">${m.name}</p>
+                                    ${!m.read ? '<span class="w-2 h-2 bg-brand-red rounded-full shrink-0"></span>' : ''}
+                                </div>
+                                <p class="text-xs text-brand-black/40 truncate">${m.subject}</p>
+                                <p class="text-xs text-brand-black/30 mt-1">${new Date(m.createdAt).toLocaleDateString('id-ID',{day:'numeric',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'})}</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-1 shrink-0">
+                            <button onclick="event.stopPropagation();deleteMessage('${m.id}')" class="p-1.5 rounded-lg hover:bg-brand-red/5 transition-colors text-brand-black/50 hover:text-brand-red"><span class="iconify text-sm" data-icon="lucide:trash-2"></span></button>
+                        </div>
+                    </div>
+                </div>
+            `).join('')}
+            ${!messages.length ? '<p class="text-center text-brand-black/40 py-16">Belum ada pesan masuk.</p>' : ''}
+        </div>`;
+}
+
+function showMessage(id) {
+    const messages = DB.get('messages', []);
+    const m = messages.find(x => x.id === id);
+    if (!m) return;
+    if (!m.read) { m.read = true; DB.set('messages', messages); updateUnreadBadge(); }
+    showModal(`
+        <div class="p-8">
+            <div class="flex items-center justify-between mb-6">
+                <h3 class="font-serif text-xl font-medium">${m.subject}</h3>
+                <button onclick="hideModal()" class="p-1.5 rounded-lg hover:bg-brand-cream transition-colors"><span class="iconify" data-icon="lucide:x"></span></button>
+            </div>
+            <div class="space-y-4">
+                <div class="flex flex-wrap gap-4 text-sm">
+                    <div><span class="text-brand-black/40">Dari:</span> <span class="font-medium">${m.name}</span></div>
+                    <div><span class="text-brand-black/40">Email:</span> <span class="font-medium">${m.email}</span></div>
+                    <div><span class="text-brand-black/40">Waktu:</span> <span class="font-medium">${new Date(m.createdAt).toLocaleDateString('id-ID',{day:'numeric',month:'long',year:'numeric',hour:'2-digit',minute:'2-digit'})}</span></div>
+                </div>
+                <hr class="border-brand-black/5">
+                <p class="text-sm text-brand-black/70 leading-relaxed whitespace-pre-wrap">${m.message}</p>
+                <div class="pt-2">
+                    <a href="mailto:${m.email}?subject=Re: ${encodeURIComponent(m.subject)}" class="inline-flex items-center gap-2 bg-brand-black text-white text-xs font-semibold tracking-wider uppercase px-6 py-3 rounded-full hover:bg-brand-red transition-colors duration-300">
+                        <span class="iconify" data-icon="lucide:reply"></span> Balas Email
+                    </a>
+                </div>
+            </div>
+        </div>
+    `);
+    renderMessages();
+}
+
+function markAllRead() {
+    const messages = DB.get('messages', []);
+    messages.forEach(m => m.read = true);
+    DB.set('messages', messages);
+    updateUnreadBadge();
+    renderMessages();
+    toast('Semua pesan ditandai sudah dibaca.', 'info');
+}
+
+function deleteMessage(id) {
+    showModal(`
+        <div class="p-8 text-center">
+            <div class="w-14 h-14 rounded-full bg-brand-red/10 flex items-center justify-center mx-auto mb-4">
+                <span class="iconify text-2xl text-brand-red" data-icon="lucide:trash-2"></span>
+            </div>
+            <h3 class="font-serif text-xl font-medium mb-2">Hapus Pesan?</h3>
+            <p class="text-sm text-brand-black/50 mb-6">Tindakan ini tidak dapat dibatalkan.</p>
+            <div class="flex gap-3">
+                <button onclick="hideModal()" class="flex-1 border-2 border-brand-black/10 text-sm font-semibold tracking-wider uppercase py-3.5 rounded-full hover:border-brand-black/30 transition-colors">Batal</button>
+                <button onclick="confirmDeleteMessage('${id}')" class="flex-1 bg-brand-red text-white text-sm font-semibold tracking-wider uppercase py-3.5 rounded-full hover:bg-brand-black transition-colors duration-300">Hapus</button>
+            </div>
+        </div>
+    `);
+}
+function confirmDeleteMessage(id) {
+    let messages = DB.get('messages', []);
+    messages = messages.filter(m => m.id !== id);
+    DB.set('messages', messages);
+    hideModal();
+    updateUnreadBadge();
+    renderMessages();
+    toast('Pesan berhasil dihapus.', 'info');
+}
+
+// ========== ADMIN LOGOUT ==========
+function adminLogout() {
+    Auth.logout();
+    showPortfolio();
+    toast('Berhasil keluar dari panel admin.', 'info');
+}
+
+// ========== INIT ==========
+DB.init();
+if (Auth.check()) {
+    showAdmin();
+} else {
+    showPortfolio();
+}
+</script>
+</body>
+</html>
